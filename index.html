@@ -1,123 +1,101 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Undangan Pernikahan</title>
-
-  <link rel="stylesheet" href="style.css">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahri & Rizki | Undangan Pernikahan</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 </head>
-
 <body>
-
-<div class="overlay">
-
-  <div class="hero">
-
-    <h3>The Wedding Of</h3>
-
-    <h1>Fahri & Kiki</h1>
-
-    <img src="assets/couple.jpg" class="couple-img">
-
-    <p class="invite-text">
-      Kepada Yth.
-    </p>
-
-    <h2 id="guestName">Tamu Undangan</h2>
-
-    <button onclick="openInvitation()">
-      Buka Undangan
-    </button>
-
-  </div>
-
-</div>
-
-<div class="content" id="content">
-
-  <section>
-    <h2>Assalamu'alaikum Warahmatullahi Wabarakatuh</h2>
-
-    <p>
-      Dengan memohon rahmat dan ridho Allah SWT,
-      kami bermaksud menyelenggarakan acara pernikahan putra-putri kami.
-    </p>
-  </section>
-
-  <section class="couple-section">
-
-    <div class="person">
-      <h3>Fahri Renngur</h3>
-      <p>Putra ke 3 dari Bapak Muhammad Saleh Renngur & Ibu Aminah Renngur</p>
+    <!-- Opening Screen Cinematic -->
+    <div id="opening" class="opening-screen">
+        <div class="opening-content">
+            <h1 class="elegant-title">Fahri & Rizki</h1>
+            <p class="date">13 Juni 2026</p>
+            <button onclick="openInvitation()" class="open-btn">Buka Undangan</button>
+        </div>
     </div>
 
-    <h1>&</h1>
+    <!-- Main Content (hidden sampai dibuka) -->
+    <div id="main-content" class="hidden">
+        <header>
+            <nav>
+                <div class="guest-name">Kepada Yth.<br><span id="guest-name">Bapak/Ibu/Saudara/i</span></div>
+            </nav>
+        </header>
 
-    <div class="person">
-      <h3>Rizki Balqis Renngur</h3>
-      <p>Putri ke 7 dari Bapak Hasan Renngur (Alm) & Ibu Aisah Renngur</p>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Fahri Renngur</h1>
+                <span class="and">&</span>
+                <h1>Rizki Balqis Renngur</h1>
+                <div class="quran">
+                    <p>وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا...</p>
+                    <small>Ar-Rum: 21</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="couple" data-aos="fade-up">
+            <div class="groom">
+                <h2>Fahri Renngur</h2>
+                <p>Putra ke-3 dari<br>Bapak Muhammad Saleh Renngur & Ibu Aminah Renngur</p>
+            </div>
+            <div class="bride">
+                <h2>Rizki Balqis Renngur</h2>
+                <p>Putri ke-7 dari<br>Bapak Hasan Renngur (Alm) & Ibu Aisah Renngur</p>
+            </div>
+        </section>
+
+        <section class="events" data-aos="fade-up">
+            <h2>Acara</h2>
+            <div class="event-card">
+                <h3>Akad Nikah</h3>
+                <p>13 Juni 2026 • 09.00 – 10.00 WIT</p>
+            </div>
+            <div class="event-card">
+                <h3>Resepsi</h3>
+                <p>13 Juni 2026 • 11.00 – 13.00 WIT</p>
+            </div>
+            <a href="https://maps.google.com/?q=LOKASI_ANDA" target="_blank" class="maps-btn">
+                Google Maps Lokasi Acara <i class="fas fa-map-marker-alt"></i>
+            </a>
+        </section>
+
+        <section class="countdown" data-aos="fade-up">
+            <h2>Hitung Mundur</h2>
+            <div id="countdown" class="timer"></div>
+        </section>
+
+        <section class="gift" data-aos="fade-up">
+            <h2>Titip Hadiah / QRIS</h2>
+            <img src="qris.jpg" alt="QRIS" class="qris-img">
+            <p>Atau transfer ke rekening yang tertera di halaman ini.</p>
+        </section>
+
+        <section class="guestbook" data-aos="fade-up">
+            <h2>Doa & Ucapan</h2>
+            <form id="guestbook-form">
+                <input type="text" id="nama" placeholder="Nama Anda" required>
+                <textarea id="ucapan" placeholder="Tulis doa & ucapan..." required></textarea>
+                <button type="submit">Kirim Ucapan</button>
+            </form>
+            <div id="ucapan-list"></div>
+        </section>
+
+        <footer>
+            <p>Terima kasih atas doa dan restu Anda.</p>
+            <small>Fahri & Rizki • 13 Juni 2026</small>
+        </footer>
     </div>
 
-  </section>
+    <audio id="backsound" loop>
+        <source src="assets/audio/backsound.mp3" type="audio/mpeg">
+    </audio>
 
-  <section>
-
-    <h2>Akad Nikah</h2>
-
-    <p>Minggu, 13 Juni 2026</p>
-    <p>09.00 WIT</p>
-    <p>Desa Dullah, Papua Barat</p>
-
-  </section>
-
-  <section>
-
-    <h2>Resepsi</h2>
-
-    <p>Minggu, 20 Desember 2026</p>
-    <p>19.00 WIT</p>
-    <p>Gedung Serbaguna</p>
-
-  </section>
-
-  <section>
-
-    <h2>Lokasi</h2>
-
-    <a
-      href="https://maps.google.com"
-      target="_blank"
-      class="map-btn"
-    >
-      Buka Google Maps
-    </a>
-
-  </section>
-
-  <section>
-
-    <h2>Ucapan & Doa</h2>
-
-    <textarea placeholder="Tulis ucapan..."></textarea>
-    <button>Kirim</button>
-
-  </section>
-
-  <footer>
-    <p>Terima kasih atas doa dan kehadirannya</p>
-  </footer>
-
-</div>
-
-<audio id="music" autoplay loop>
-  <source src="assets/music.mp3" type="audio/mp3">
-</audio>
-
-<script src="script.js"></script>
-
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
