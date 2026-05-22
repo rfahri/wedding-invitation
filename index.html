@@ -4,91 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fahri & Rizki | Undangan Pernikahan</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        .title-font { font-family: 'Playfair Display', serif; }
+    </style>
 </head>
-<body>
-    <!-- Opening Screen Cinematic -->
-    <div id="opening" class="opening-screen">
-        <div class="opening-content">
-            <h1 class="elegant-title">Fahri & Rizki</h1>
-            <p class="date">13 Juni 2026</p>
-            <button onclick="openInvitation()" class="open-btn">Buka Undangan</button>
+<body class="bg-[#f8f1e9] text-gray-800 overflow-x-hidden">
+    
+    <!-- Opening Screen -->
+    <div id="opening" class="fixed inset-0 bg-gradient-to-br from-[#4a0a0a] via-[#800000] to-[#4a0a0a] flex items-center justify-center z-50 transition-opacity duration-1000">
+        <div class="text-center text-white px-6">
+            <h1 class="title-font text-6xl md:text-7xl mb-4 tracking-wider">Fahri & Rizki</h1>
+            <p class="text-xl md:text-2xl mb-10 opacity-90">13 Juni 2026</p>
+            <button onclick="openInvitation()" 
+                    class="px-12 py-5 bg-[#C9A14C] hover:bg-[#d4b36e] text-[#4a0a0a] font-semibold text-lg rounded-full transition-all duration-300 shadow-xl hover:scale-105">
+                Buka Undangan
+            </button>
         </div>
     </div>
 
-    <!-- Main Content (hidden sampai dibuka) -->
+    <!-- Main Content -->
     <div id="main-content" class="hidden">
-        <header>
-            <nav>
-                <div class="guest-name">Kepada Yth.<br><span id="guest-name">Bapak/Ibu/Saudara/i</span></div>
-            </nav>
-        </header>
 
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Fahri Renngur</h1>
-                <span class="and">&</span>
-                <h1>Rizki Balqis Renngur</h1>
-                <div class="quran">
-                    <p>وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا...</p>
-                    <small>Ar-Rum: 21</small>
+        <!-- Guest Name -->
+        <div class="bg-white py-6 shadow-md text-center">
+            <p class="text-sm tracking-widest text-gray-500">Kepada Yth.</p>
+            <p id="guest-name" class="text-xl font-semibold text-[#800000]"></p>
+        </div>
+
+        <section class="hero py-24 text-center bg-gradient-to-b from-[#800000] to-[#4a0a0a] text-white">
+            <div class="max-w-2xl mx-auto px-6">
+                <h1 class="title-font text-5xl md:text-6xl mb-6">Fahri Renngur</h1>
+                <span class="text-4xl text-[#C9A14C]">&</span>
+                <h1 class="title-font text-5xl md:text-6xl mt-6">Rizki Balqis Renngur</h1>
+                
+                <div class="mt-12 bg-white/10 backdrop-blur-md p-8 rounded-3xl mx-auto max-w-md">
+                    <p class="text-2xl leading-relaxed">"وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْا اِلَيْهَا"</p>
+                    <p class="text-sm mt-4 opacity-75">Ar-Rum : 21</p>
                 </div>
             </div>
         </section>
 
-        <section class="couple" data-aos="fade-up">
-            <div class="groom">
-                <h2>Fahri Renngur</h2>
-                <p>Putra ke-3 dari<br>Bapak Muhammad Saleh Renngur & Ibu Aminah Renngur</p>
-            </div>
-            <div class="bride">
-                <h2>Rizki Balqis Renngur</h2>
-                <p>Putri ke-7 dari<br>Bapak Hasan Renngur (Alm) & Ibu Aisah Renngur</p>
+        <!-- Mempelai -->
+        <section class="py-20 px-6 max-w-5xl mx-auto" data-aos="fade-up">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="text-center">
+                    <h2 class="title-font text-4xl text-[#800000]">Fahri Renngur</h2>
+                    <p class="mt-4 text-gray-600">Putra ke-3 dari<br>Bapak Muhammad Saleh Renngur & Ibu Aminah Renngur</p>
+                </div>
+                <div class="text-center">
+                    <h2 class="title-font text-4xl text-[#800000]">Rizki Balqis Renngur</h2>
+                    <p class="mt-4 text-gray-600">Putri ke-7 dari<br>Bapak Hasan Renngur (Alm) & Ibu Aisah Renngur</p>
+                </div>
             </div>
         </section>
 
-        <section class="events" data-aos="fade-up">
-            <h2>Acara</h2>
-            <div class="event-card">
-                <h3>Akad Nikah</h3>
-                <p>13 Juni 2026 • 09.00 – 10.00 WIT</p>
+        <!-- Acara -->
+        <section class="py-20 bg-white" data-aos="fade-up">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="text-4xl title-font text-[#800000] mb-12">Acara Pernikahan</h2>
+                
+                <div class="space-y-10">
+                    <div class="border-l-4 border-[#C9A14C] pl-8 text-left max-w-md mx-auto">
+                        <h3 class="font-semibold text-2xl">Akad Nikah</h3>
+                        <p class="text-xl">Sabtu, 13 Juni 2026</p>
+                        <p class="text-lg text-gray-600">09.00 – 10.00 WIT</p>
+                    </div>
+                    
+                    <div class="border-l-4 border-[#C9A14C] pl-8 text-left max-w-md mx-auto">
+                        <h3 class="font-semibold text-2xl">Resepsi</h3>
+                        <p class="text-xl">Sabtu, 13 Juni 2026</p>
+                        <p class="text-lg text-gray-600">11.00 – 13.00 WIT</p>
+                    </div>
+                </div>
+
+                <a href="https://maps.app.goo.gl/U9iefEM5g7ypHyTj6" target="_blank"
+                   class="mt-12 inline-flex items-center gap-3 bg-[#800000] text-white px-10 py-5 rounded-full hover:bg-[#a00000] transition-all text-lg">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Lihat Lokasi di Google Maps
+                </a>
             </div>
-            <div class="event-card">
-                <h3>Resepsi</h3>
-                <p>13 Juni 2026 • 11.00 – 13.00 WIT</p>
-            </div>
-            <a href="https://maps.google.com/?q=LOKASI_ANDA" target="_blank" class="maps-btn">
-                Google Maps Lokasi Acara <i class="fas fa-map-marker-alt"></i>
-            </a>
         </section>
 
-        <section class="countdown" data-aos="fade-up">
-            <h2>Hitung Mundur</h2>
-            <div id="countdown" class="timer"></div>
+        <!-- Countdown -->
+        <section class="py-20 bg-[#800000] text-white text-center" data-aos="fade-up">
+            <h2 class="text-3xl mb-10">Hitung Mundur</h2>
+            <div id="countdown" class="grid grid-cols-4 gap-6 max-w-2xl mx-auto text-4xl font-light"></div>
         </section>
 
-        <section class="gift" data-aos="fade-up">
-            <h2>Titip Hadiah / QRIS</h2>
-            <img src="qris.jpg" alt="QRIS" class="qris-img">
-            <p>Atau transfer ke rekening yang tertera di halaman ini.</p>
+        <!-- QRIS -->
+        <section class="py-20 px-6 text-center" data-aos="fade-up">
+            <h2 class="text-4xl title-font text-[#800000] mb-8">Wedding Gift</h2>
+            <img src="qris.jpg" alt="QRIS" class="mx-auto rounded-2xl shadow-2xl max-w-xs border-8 border-white">
+            <p class="mt-8 text-gray-600">Doa dan restu Anda adalah hadiah terbaik bagi kami</p>
         </section>
 
-        <section class="guestbook" data-aos="fade-up">
-            <h2>Doa & Ucapan</h2>
-            <form id="guestbook-form">
-                <input type="text" id="nama" placeholder="Nama Anda" required>
-                <textarea id="ucapan" placeholder="Tulis doa & ucapan..." required></textarea>
-                <button type="submit">Kirim Ucapan</button>
+        <!-- Guestbook -->
+        <section class="py-20 bg-white px-6" data-aos="fade-up">
+            <h2 class="text-4xl title-font text-center text-[#800000] mb-10">Doa & Ucapan</h2>
+            <form id="guestbook-form" class="max-w-lg mx-auto space-y-6">
+                <input type="text" id="nama" placeholder="Nama Anda" required
+                       class="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-[#C9A14C]">
+                <textarea id="ucapan" rows="4" placeholder="Tulis doa dan ucapan untuk kami..." required
+                          class="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-[#C9A14C]"></textarea>
+                <button type="submit"
+                        class="w-full bg-[#C9A14C] hover:bg-[#d4b36e] py-5 text-[#4a0a0a] font-semibold rounded-2xl text-lg transition">
+                    Kirim Ucapan
+                </button>
             </form>
-            <div id="ucapan-list"></div>
+            <div id="ucapan-list" class="mt-12 space-y-6 max-w-lg mx-auto"></div>
         </section>
 
-        <footer>
-            <p>Terima kasih atas doa dan restu Anda.</p>
-            <small>Fahri & Rizki • 13 Juni 2026</small>
+        <footer class="bg-[#4a0a0a] text-white py-12 text-center">
+            <p class="text-lg">Terima kasih atas doa dan restu Anda</p>
+            <small class="opacity-70">Fahri & Rizki • 13 Juni 2026</small>
         </footer>
     </div>
 
