@@ -9,7 +9,7 @@ tailwind.config = {
 const firebaseConfig = {
     apiKey: "AIzaSyAa1IVrlRpJenwE3cOO4tJkt89ag9NajsQ",
     authDomain: "fahri-rizki-wedding.firebaseapp.com",
-    databaseURL: "https://fahri-rizki-wedding-default-rtdb.asia-southeast1.firebasedatabase.app",
+    databaseURL: "https://fahri-rizki-wedding-default-rtdb.firebaseio.com/",
     projectId: "fahri-rizki-wedding",
     storageBucket: "fahri-rizki-wedding.firebasestorage.app",
     messagingSenderId: "245636728968",
