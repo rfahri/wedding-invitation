@@ -1,141 +1,162 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fahri & Rizki | Undangan Pernikahan</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <title>Undangan Pernikahan Digital - Fahri & Kiky</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
-        .title-font { font-family: 'Playfair Display', serif; }
-    </style>
+    <!-- Third-Party CDNs (Styles) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-[#f8f1e9] text-gray-800 overflow-x-hidden">
-    
-    <!-- Opening Screen -->
-    <div id="opening" class="fixed inset-0 bg-gradient-to-br from-[#4a0a0a] via-[#800000] to-[#4a0a0a] flex items-center justify-center z-50 transition-opacity duration-1000">
-        <div class="text-center text-white px-6">
-            <h1 class="title-font text-6xl md:text-7xl mb-4 tracking-wider">Fahri & Rizki</h1>
-            <p class="text-xl md:text-2xl mb-10 opacity-90">13 Juni 2026</p>
-            <button onclick="openInvitation()" 
-                    class="px-12 py-5 bg-[#C9A14C] hover:bg-[#d4b36e] text-[#4a0a0a] font-semibold text-lg rounded-full transition-all duration-300 shadow-xl hover:scale-105">
-                Buka Undangan
-            </button>
-        </div>
-    </div>
+<body class="antialiased">
 
-    <!-- Main Content -->
-    <div id="main-content" class="hidden">
-
-        <!-- Guest Name -->
-        <div class="bg-white py-6 shadow-md text-center">
-            <p class="text-sm tracking-widest text-gray-500">Kepada Yth.</p>
-            <p id="guest-name" class="text-xl font-semibold text-[#800000]"></p>
-        </div>
-
-        <section class="hero py-24 text-center bg-gradient-to-b from-[#800000] to-[#4a0a0a] text-white">
-            <div class="max-w-2xl mx-auto px-6">
-                <h1 class="title-font text-5xl md:text-6xl mb-6">Fahri Renngur</h1>
-                <span class="text-4xl text-[#C9A14C]">&</span>
-                <h1 class="title-font text-5xl md:text-6xl mt-6">Rizki Balqis Renngur</h1>
-                
-                <div class="mt-12 bg-white/10 backdrop-blur-md p-8 rounded-3xl mx-auto max-w-md">
-                    <p class="text-2xl leading-relaxed">"Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."</p>
-                    <p class="text-sm mt-4 opacity-75">Ar-Rum : 21</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Mempelai -->
-        <section class="py-20 px-6 max-w-5xl mx-auto" data-aos="fade-up">
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="text-center">
-                    <h2 class="title-font text-4xl text-[#800000]">Fahri Renngur</h2>
-                    <p class="mt-4 text-gray-600">Putra ke-3 dari<br>Bapak Muhammad Saleh Renngur & Ibu Aminah Renngur</p>
-                </div>
-                <div class="text-center">
-                    <h2 class="title-font text-4xl text-[#800000]">Rizki Balqis Renngur</h2>
-                    <p class="mt-4 text-gray-600">Putri ke-7 dari<br>Bapak Hasan Renngur (Alm) & Ibu Aisah Renngur</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Acara -->
-        <section class="py-20 bg-white" data-aos="fade-up">
-            <div class="max-w-4xl mx-auto px-6 text-center">
-                <h2 class="text-4xl title-font text-[#800000] mb-12">Acara Pernikahan</h2>
-                
-                <div class="space-y-10">
-                    <div class="border-l-4 border-[#C9A14C] pl-8 text-left max-w-md mx-auto">
-                        <h3 class="font-semibold text-2xl">Akad Nikah</h3>
-                        <p class="text-xl">Sabtu, 13 Juni 2026</p>
-                        <p class="text-lg text-gray-600">09.00 – 10.00 WIT</p>
-                    </div>
-                    
-                    <div class="border-l-4 border-[#C9A14C] pl-8 text-left max-w-md mx-auto">
-                        <h3 class="font-semibold text-2xl">Resepsi</h3>
-                        <p class="text-xl">Sabtu, 13 Juni 2026</p>
-                        <p class="text-lg text-gray-600">11.00 – 13.00 WIT</p>
-                    </div>
-                </div>
-
-                <a href="https://maps.app.goo.gl/U9iefEM5g7ypHyTj6" target="_blank"
-                   class="mt-12 inline-flex items-center gap-3 bg-[#800000] text-white px-10 py-5 rounded-full hover:bg-[#a00000] transition-all text-lg">
-                    <i class="fas fa-map-marker-alt"></i>
-                    Lihat Lokasi di Google Maps
-                </a>
-            </div>
-        </section>
-
-        <!-- Countdown -->
-        <section class="py-20 bg-[#800000] text-white text-center" data-aos="fade-up">
-            <h2 class="text-3xl mb-10">Hitung Mundur</h2>
-            <div id="countdown" class="grid grid-cols-4 gap-6 max-w-2xl mx-auto text-4xl font-light"></div>
-        </section>
-
-        <!-- QRIS -->
-        <section class="py-20 px-6 text-center" data-aos="fade-up">
-            <h2 class="text-4xl title-font text-[#800000] mb-8">Wedding Gift</h2>
-            <img src="qris.jpg" alt="QRIS" class="mx-auto rounded-2xl shadow-2xl max-w-xs border-8 border-white">
-            <p class="mt-8 text-gray-600">Doa dan restu Anda adalah hadiah terbaik bagi kami</p>
-        </section>
-
-        <!-- Guestbook -->
-        <section class="py-20 bg-white px-6" data-aos="fade-up">
-            <h2 class="text-4xl title-font text-center text-[#800000] mb-10">Doa & Ucapan</h2>
-            <form id="guestbook-form" class="max-w-lg mx-auto space-y-6">
-                <input type="text" id="nama" placeholder="Nama Anda" required
-                       class="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-[#C9A14C]">
-                <textarea id="ucapan" rows="4" placeholder="Tulis doa dan ucapan untuk kami..." required
-                          class="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-[#C9A14C]"></textarea>
-                <button type="submit"
-                        class="w-full bg-[#C9A14C] hover:bg-[#d4b36e] py-5 text-[#4a0a0a] font-semibold rounded-2xl text-lg transition">
-                    Kirim Ucapan
+    <!-- Splash Screen / Cover -->
+    <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#4a0e17] text-white transition-all duration-1000 p-4 text-center">
+        <div class="absolute inset-0 opacity-10 parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200');"></div>
+        <div class="relative z-10 max-w-md mx-auto" data-aos="zoom-in">
+            <p class="text-xs tracking-[0.3em] uppercase mb-4 text-amber-200 font-medium">Walimatul 'Ursy</p>
+            <h1 class="font-serif text-4xl md:text-5xl font-bold mb-2 tracking-wide">Fahri &amp; Kiky</h1>
+            <p class="font-cursive text-3xl my-4 text-amber-200">Sabtu, 13 Juni 2026</p>
+            <div class="mt-8 border border-amber-200/30 p-6 rounded-lg bg-black/20 backdrop-blur-sm">
+                <p class="text-sm text-gray-300 mb-2">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+                <h3 id="guest-name" class="font-serif text-xl font-semibold text-amber-100 mb-4">[Nama Tamu]</h3>
+                <button id="btn-open-invitation" class="px-6 py-3 bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#aa771c] text-[#4a0e17] font-semibold text-sm rounded-full shadow-lg hover:scale-105 transition-transform duration-300 flex items-center justify-center gap-2 mx-auto cursor-pointer">
+                    <i class="fa-solid fa-envelope-open animate-bounce"></i> Buka Undangan
                 </button>
-            </form>
-            <div id="ucapan-list" class="mt-12 space-y-6 max-w-lg mx-auto"></div>
-        </section>
-
-        <footer class="bg-[#4a0a0a] text-white py-12 text-center">
-            <p class="text-lg">Terima kasih atas doa dan restu Anda</p>
-            <small class="opacity-70">Fahri & Rizki • 13 Juni 2026</small>
-        </footer>
+            </div>
+        </div>
     </div>
 
-    <audio id="backsound" loop>
-        <source src="assets/audio/backsound.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Floating Audio Control -->
+    <div class="fixed bottom-6 right-6 z-40">
+        <button id="music-control" class="w-12 h-12 bg-[#6b1120] text-amber-200 rounded-full flex items-center justify-center shadow-2xl focus:outline-none cursor-pointer border border-amber-400/50">
+            <i id="music-icon" class="fa-solid fa-compact-disc text-xl"></i>
+        </button>
+        <div class="pointer-events-none absolute w-1 h-1 opacity-0 overflow-hidden">
+            <iframe id="yt-player" src="https://www.youtube.com/embed/EF9CDghLLvo?enablejsapi=1&autoplay=0&loop=1&playlist=EF9CDghLLvo" allow="autoplay"></iframe>
+        </div>
+    </div>
 
-    <script src="assets/js/script.js"></script>
+    <!-- Main Content Box -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000 hidden">
+        
+        <!-- Hero Section -->
+        <header class="relative h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-[#4a0e17]">
+                <div class="absolute inset-0 opacity-60 bg-cover bg-center transition-transform duration-[10000ms] scale-105 hover:scale-100" style="background-image: url('https://drive.google.com/thumbnail?id=1EzQ4RDVgr7Sz59FSrW7LXQjOi0FR8Vty&sz=w1920-h1080');"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-[#4a0e17]/50 to-[#4a0e17]"></div>
+            </div>
+            <div class="relative z-10 text-center px-4 max-w-3xl" data-aos="fade-up">
+                <span class="text-amber-300 font-medium tracking-[0.4em] uppercase text-xs block mb-4">The Wedding of</span>
+                <h1 class="font-serif text-5xl md:text-7xl font-bold tracking-wide text-white mb-2">Fahri &amp; Kiky</h1>
+                <p class="font-cursive text-4xl text-amber-200 my-6">Kami mengundang Anda untuk merayakan kebahagiaan kami</p>
+                <p class="text-sm text-gray-200 tracking-widest uppercase">Sabtu, 13 Juni 2026</p>
+            </div>
+        </header>
+
+        <!-- Countdown Section -->
+        <section class="py-20 bg-gradient-to-b from-[#4a0e17] to-[#6b1120] text-white px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-serif text-3xl font-bold text-amber-200 mb-10" data-aos="fade-up">Menuju Hari Bahagia</h2>
+                <div class="grid grid-cols-4 gap-3 max-w-2xl mx-auto font-serif" data-aos="fade-up">
+                    <div class="bg-black/30 p-4 rounded-xl border border-amber-400/20"><span id="days" class="block text-3xl font-bold text-amber-200">00</span><span class="text-xs font-sans text-gray-400">Hari</span></div>
+                    <div class="bg-black/30 p-4 rounded-xl border border-amber-400/20"><span id="hours" class="block text-3xl font-bold text-amber-200">00</span><span class="text-xs font-sans text-gray-400">Jam</span></div>
+                    <div class="bg-black/30 p-4 rounded-xl border border-amber-400/20"><span id="minutes" class="block text-3xl font-bold text-amber-200">00</span><span class="text-xs font-sans text-gray-400">Menit</span></div>
+                    <div class="bg-black/30 p-4 rounded-xl border border-amber-400/20"><span id="seconds" class="block text-3xl font-bold text-amber-200">00</span><span class="text-xs font-sans text-gray-400">Detik</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section -->
+        <section class="py-24 px-4 bg-white">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="font-serif text-4xl font-bold text-maroon-prime mb-12">Galeri Momen Indah</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="gallery-container">
+                    <div class="relative group overflow-hidden rounded-xl aspect-[4/5]" data-aos="fade-up"><div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://drive.google.com/thumbnail?id=1nk6RsVzWmBOevscTv_YDuXc8k_pLa9xO&sz=w600');"></div></div>
+                    <div class="relative group overflow-hidden rounded-xl aspect-[4/5]" data-aos="fade-up" data-aos-delay="100"><div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://drive.google.com/thumbnail?id=1nb1JnfppVQWB74C2qx5z11naaOXfz8Xt&sz=w600');"></div></div>
+                    <div class="relative group overflow-hidden rounded-xl aspect-[4/5]" data-aos="fade-up" data-aos-delay="200"><div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://drive.google.com/thumbnail?id=1YkXUpFY3QXjCfaPYbgq2i4o0mxY97jNp&sz=w600');"></div></div>
+                    <div class="relative group overflow-hidden rounded-xl aspect-[4/5]" data-aos="fade-up"><div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://drive.google.com/thumbnail?id=1o-zl0j50f_Ypy1ZC8bnS2_nxH68YvR7_&sz=w600');"></div></div>
+                    <div class="relative group overflow-hidden rounded-xl aspect-[4/5]" data-aos="fade-up" data-aos-delay="100"><div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://drive.google.com/thumbnail?id=1f6sQ9EZWQ5egp7Hb9EF_AcyEpEW_1Otg&sz=w600');"></div></div>
+                    <div class="relative group overflow-hidden rounded-xl aspect-[4/5]" data-aos="fade-up" data-aos-delay="200"><div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://drive.google.com/thumbnail?id=1O3cNgyJz_cuYJrgGu0BOK_qoakK3k_ZX&sz=w600');"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Form Section -->
+        <section class="py-24 px-4 bg-[#faf6f6]">
+            <div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-2xl relative" data-aos="zoom-in">
+                <h2 class="font-serif text-3xl font-bold text-center text-maroon-prime mb-6">Konfirmasi Kehadiran</h2>
+                <form id="rsvp-form" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase mb-2">Nama Lengkap</label>
+                        <input type="text" id="rsvp-name" required class="w-full px-4 py-3 bg-gray-50 border rounded-xl text-sm focus:outline-none focus:border-maroon-prime" placeholder="Nama Anda">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase mb-2">Jumlah Tamu</label>
+                        <select id="rsvp-guests" class="w-full px-4 py-3 bg-gray-50 border rounded-xl text-sm focus:outline-none">
+                            <option value="1">1 Orang</option><option value="2">2 Orang</option><option value="3">3 Orang</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase mb-2">Kehadiran</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="border rounded-xl p-3 flex justify-center gap-2 cursor-pointer"><input type="radio" name="attendance" value="Hadir" checked> Hadir</label>
+                            <label class="border rounded-xl p-3 flex justify-center gap-2 cursor-pointer"><input type="radio" name="attendance" value="Tidak Hadir"> Tidak Hadir</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase mb-2">Pesan</label>
+                        <textarea id="rsvp-message" rows="3" class="w-full px-4 py-3 bg-gray-50 border rounded-xl text-sm" placeholder="Ucapan Anda..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-maroon-prime text-white font-semibold rounded-xl text-sm shadow-md">Kirim RSVP</button>
+                </form>
+                <div id="rsvp-toast" class="hidden absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center p-6 text-center">
+                    <h4 class="font-serif text-xl font-bold text-maroon-prime mb-2">Terima Kasih!</h4>
+                    <p class="text-sm text-gray-600">Konfirmasi Anda berhasil disimpan.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guestbook Section -->
+        <section class="py-24 px-4 bg-white">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="font-serif text-3xl font-bold text-maroon-prime">Buku Tamu &amp; Doa Restu</h2>
+                    <p class="text-sm text-gray-500 mt-2">Silakan berikan doa terbaik bagi awal baru kami.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-2xl border mb-8">
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <input type="text" id="gb-name" placeholder="Nama Anda" class="w-full px-4 py-2.5 bg-white border rounded-xl text-sm">
+                            <select id="gb-status" class="w-full px-4 py-2.5 bg-white border rounded-xl text-sm">
+                                <option value="Hadir">Hadir</option><option value="Tidak Hadir">Tidak Hadir</option>
+                            </select>
+                        </div>
+                        <textarea id="gb-comment" rows="3" placeholder="Tulis doa restu Anda..." class="w-full px-4 py-2.5 bg-white border rounded-xl text-sm"></textarea>
+                        <button id="btn-submit-gb" class="px-6 py-2.5 bg-maroon-prime text-white rounded-xl text-sm font-medium w-full sm:w-auto cursor-pointer">Kirim Ucapan</button>
+                    </div>
+                </div>
+                <div id="wishes-box" class="space-y-4 max-h-[450px] overflow-y-auto pr-2"></div>
+            </div>
+        </section>
+
+        <!-- Gift / Wallet Section Trigger Button -->
+        <section class="py-20 bg-[#6b1120] text-white text-center">
+            <h2 class="font-serif text-3xl font-bold text-amber-200 mb-6">Kado Digital</h2>
+            <button id="btn-open-gift" class="px-8 py-3 bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#aa771c] text-[#4a0e17] font-bold text-sm rounded-full shadow-xl cursor-pointer">Kirim Hadiah Digital</button>
+        </section>
+
+    </div>
+
+    <!-- Third-Party Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Core Application Initialization Entry (Module Type) -->
+    <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
