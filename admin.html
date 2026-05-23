@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel Undangan</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{
+    background:#0f172a;
+    color:white;
+    font-family:sans-serif;
+}
+
+.glass{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.1);
+}
+</style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-5">
+
+<div class="glass rounded-3xl p-8 w-full max-w-xl shadow-2xl">
+
+    <h1 class="text-3xl font-bold mb-2">
+        Admin Panel Undangan
+    </h1>
+
+    <p class="text-gray-300 mb-6">
+        Generate link & share WhatsApp otomatis
+    </p>
+
+    <!-- Base URL -->
+    <div class="mb-5">
+        <label class="block mb-2 text-sm text-gray-300">
+            Link Website Undangan
+        </label>
+
+        <input 
+            type="text"
+            id="baseUrl"
+            value="https://rfahri.github.io/wedding-invitation"
+            class="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 outline-none"
+        >
+    </div>
+
+    <!-- Nama Tamu -->
+    <div class="mb-5">
+        <label class="block mb-2 text-sm text-gray-300">
+            Nama Tamu
+        </label>
+
+        <input 
+            type="text"
+            id="guestName"
+            placeholder="Contoh: Bapak Ahmad & Keluarga"
+            class="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 outline-none"
+        >
+    </div>
+
+    <!-- Nomor WA -->
+    <div class="mb-5">
+        <label class="block mb-2 text-sm text-gray-300">
+            Nomor WhatsApp
+        </label>
+
+        <input 
+            type="text"
+            id="phone"
+            placeholder="628xxxxxxxxxx"
+            class="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 outline-none"
+        >
+    </div>
+
+    <!-- Hasil -->
+    <div class="mb-5">
+        <label class="block mb-2 text-sm text-gray-300">
+            Link Undangan
+        </label>
+
+        <textarea 
+            id="result"
+            rows="4"
+            class="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 outline-none"
+            readonly
+        ></textarea>
+    </div>
+
+    <!-- Buttons -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+        <button 
+            onclick="generateLink()"
+            class="bg-blue-600 hover:bg-blue-700 p-4 rounded-xl font-semibold transition"
+        >
+            Generate
+        </button>
+
+        <button 
+            onclick="copyLink()"
+            class="bg-slate-700 hover:bg-slate-600 p-4 rounded-xl font-semibold transition"
+        >
+            Copy Link
+        </button>
+
+        <button 
+            onclick="shareWhatsApp()"
+            class="bg-green-600 hover:bg-green-700 p-4 rounded-xl font-semibold transition"
+        >
+            Share WA
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+function validatePhoneNumber(phone){
+
+    // hapus semua selain angka
+    phone = phone.replace(/\D/g, '');
+
+    // jika diawali 0
+    if(phone.startsWith('0')){
+        phone = '62' + phone.substring(1);
+    }
+
+    // jika diawali 62
+    else if(phone.startsWith('62')){
+        // biarkan
+    }
+
+    // selain itu invalid
+    else{
+        return {
+            valid:false,
+            message:'Format nomor HP salah',
+            phone:null
+        };
+    }
+
+    // validasi panjang nomor
+    if(phone.length < 10 || phone.length > 15){
+        return {
+            valid:false,
+            message:'Nomor HP tidak valid',
+            phone:null
+        };
+    }
+
+    return {
+        valid:true,
+        message:'Nomor valid',
+        phone:phone
+    };
+}
+
+function generateLink(){
+
+    const baseUrl = document.getElementById('baseUrl').value.trim();
+    const guestName = document.getElementById('guestName').value.trim();
+
+    if(!baseUrl){
+        alert('Link website wajib diisi');
+        return;
+    }
+
+    if(!guestName){
+        alert('Nama tamu wajib diisi');
+        return;
+    }
+
+    const finalUrl =
+`${baseUrl}?to=${encodeURIComponent(guestName)}`;
+
+    document.getElementById('result').value = finalUrl;
+}
+
+async function copyLink(){
+
+    const result =
+    document.getElementById('result').value;
+
+    if(!result){
+        alert('Generate link terlebih dahulu');
+        return;
+    }
+
+    try{
+        await navigator.clipboard.writeText(result);
+        alert('Link berhasil dicopy');
+    }catch(err){
+        alert('Gagal copy link');
+    }
+}
+
+function shareWhatsApp(){
+
+    const phoneInput =
+document.getElementById('phone').value;
+
+    const guestName =
+document.getElementById('guestName').value.trim();
+
+    const invitationLink =
+document.getElementById('result').value.trim();
+
+    // validasi nomor HP
+    const validation =
+validatePhoneNumber(phoneInput);
+
+    if(!validation.valid){
+        alert(validation.message);
+        return;
+    }
+
+    // validasi nama tamu
+    if(!guestName){
+        alert('Nama tamu wajib diisi');
+        return;
+    }
+
+    // validasi link
+    if(!invitationLink){
+        alert('Generate link terlebih dahulu');
+        return;
+    }
+
+    const phone = validation.phone;
+
+    const message =
+`Assalamualaikum warahmatullahi wabarakatuh.
+Bismillahirrahmanirrahim.
+
+Kepada Yth.
+Bapak/Ibu/Saudara/i
+${guestName}
+
+Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan putra-putri kami:
+
+Fahri ＆ Kiky
+
+Untuk informasi lengkap mengenai acara, silakan kunjungi tautan undangan berikut:
+${invitationLink}
+
+Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+
+Mohon maaf, undangan disampaikan melalui pesan ini. Terima kasih atas perhatian dan doanya.
+
+Wassalamualaikum warahmatullahi wabarakatuh.
+
+Kami yang berbahagia,
+Kel. Bapak Muhammad Saleh Renngur & Ibu Aminah Renngur
+
+Kel. Ibu Aisah Renngur
+
+Fahri ＆ Kiky`;
+
+    const waUrl =
+`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+
+    window.open(waUrl, '_blank');
+}
+
+</script>
+
+</body>
+</html>
