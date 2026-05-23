@@ -737,7 +737,7 @@
     `;
 
             throw new Error("Guest parameter missing");
-        }else{
+        }
             // DATA SERVICE / INFRASTRUCTURE LAYER
             const StorageService = {
                 get(key, defaultValue = null) {
@@ -1078,8 +1078,6 @@
                     this.navigationService.init();
                 },
 
-            
-
                 openInvitation() {
                     // Fade-out Splash Cover
                     const cover = document.getElementById('splash-cover');
@@ -1104,7 +1102,6 @@
             window.addEventListener('DOMContentLoaded', () => {
                 App.init();
             });
-        }
     </script>
 </body>
 </html>
