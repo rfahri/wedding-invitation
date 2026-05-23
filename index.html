@@ -458,6 +458,69 @@
             </div>
         </section>
 
+
+        <!-- 3. RSVP FORM SECTION -->
+        <section id="rsvp" class="py-24 px-4 bg-maroon-50">
+            <div class="max-w-xl mx-auto bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-gold/10 relative" data-aos="zoom-in">
+                <div class="text-center mb-8">
+                    <span class="text-xs uppercase tracking-widest text-gold-dark font-bold block mb-1">Kehadiran</span>
+                    <h2 class="font-serif text-3xl font-bold text-maroon-900">Form RSVP Kehadiran</h2>
+                    <div class="w-12 h-[1px] bg-gold mx-auto mt-3"></div>
+                </div>
+
+                <form id="rsvp-form" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-700 mb-2">Nama Lengkap</label>
+                        <input type="text" id="rsvp-name" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-maroon-800 focus:bg-white transition-colors" placeholder="Contoh: Muhammad Safi'i">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-700 mb-2">Jumlah Tamu</label>
+                        <select id="rsvp-guests" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-maroon-800 focus:bg-white transition-colors">
+                            <option value="1">1 Orang</option>
+                            <option value="2">2 Orang</option>
+                            <option value="3">3 Orang</option>
+                            <option value="4">4 Orang</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-700 mb-2">Konfirmasi Kehadiran</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="border border-gray-200 rounded-xl p-3 flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors select-none has-[:checked]:border-maroon-800 has-[:checked]:bg-maroon-50">
+                                <input type="radio" name="attendance" value="Hadir" checked class="accent-maroon-800">
+                                <span class="text-sm font-medium text-gray-700">Hadir</span>
+                            </label>
+                            <label class="border border-gray-200 rounded-xl p-3 flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors select-none has-[:checked]:border-maroon-800 has-[:checked]:bg-maroon-50">
+                                <input type="radio" name="attendance" value="Tidak Hadir" class="accent-maroon-800">
+                                <span class="text-sm font-medium text-gray-700">Tidak Hadir</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-700 mb-2">Ucapan / Pesan Pendukung</label>
+                        <textarea id="rsvp-message" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-maroon-800 focus:bg-white transition-colors" placeholder="Tulis ucapan restu Anda..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-maroon-800 to-maroon-900 hover:from-maroon-900 hover:to-maroon-950 text-white font-bold rounded-xl text-xs uppercase tracking-widest shadow-md transition-all">
+                        Kirim Konfirmasi Kehadiran
+                    </button>
+                </form>
+
+                <!-- Custom Modal Success Overlay -->
+                <div id="rsvp-success-toast" class="hidden absolute inset-0 bg-white/95 rounded-3xl flex flex-col items-center justify-center p-6 text-center transition-all duration-500">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-circle-check text-3xl"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold text-maroon-900 mb-2">Kehadiran Terkonfirmasi</h4>
+                    <p class="text-sm text-gray-600 max-w-xs">Data Anda telah terekam secara interaktif. Terima kasih atas konfirmasinya.</p>
+                    <button onclick="document.getElementById('rsvp-success-toast').classList.add('hidden')" class="mt-6 text-xs text-maroon-800 font-semibold tracking-wider uppercase underline">Kirim Kembali</button>
+                </div>
+            </div>
+        </section>
+
+
         <!-- 7. WEDDING GIFT SECTION (AMPLOP DIGITAL) -->
         <section class="py-20 bg-maroon-900 text-white text-center px-4 relative">
             <div class="absolute inset-0 opacity-5 cultural-pattern"></div>
@@ -606,372 +669,437 @@
     <!-- SCRIPT SECTION - Clean Architecture / Domain & Data Services -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // DATA SERVICE / INFRASTRUCTURE LAYER
-        const StorageService = {
-            get(key, defaultValue = null) {
-                const data = localStorage.getItem(key);
-                return data ? JSON.parse(data) : defaultValue;
-            },
-            set(key, value) {
-                localStorage.setItem(key, JSON.stringify(value));
-            }
-        };
+        const params = new URLSearchParams(window.location.search);
+        const guestName = params.get("to");
 
-        // DOMAIN / BUSINESS LOGIC SERVICES
-        class NavigationService {
-            constructor() {
-                this.navLinks = document.querySelectorAll('.nav-link');
-                this.sections = document.querySelectorAll('section[id]');
-            }
+        // jika parameter ?to= tidak ada atau kosong
+        if (!guestName || guestName.trim() === "") {
+            document.documentElement.innerHTML = `
+            <head>
+                <title>Undangan Tidak Valid</title>
+                <script src="https://cdn.tailwindcss.com"></scr` + `ipt>
 
-            init() {
-                window.addEventListener('scroll', () => this.spyScroll());
-                
-                // Tambahkan behavior smooth scrolling saat link diklik
-                this.navLinks.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const targetId = link.getAttribute('href');
-                        const targetSection = document.querySelector(targetId);
-                        if (targetSection) {
-                            targetSection.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    });
-                });
-            }
+                <style>
+                    body{
+                        margin:0;
+                        padding:0;
+                        background:#020617;
+                        font-family:sans-serif;
+                        overflow:hidden;
+                    }
 
-            spyScroll() {
-                let scrollPos = window.scrollY || document.documentElement.scrollTop;
-                
-                this.sections.forEach(section => {
-                    const offset = section.offsetTop - 120;
-                    const height = section.offsetHeight;
-                    const id = section.getAttribute('id');
+                    .glass{
+                        background:rgba(255,255,255,0.08);
+                        backdrop-filter:blur(20px);
+                        border:1px solid rgba(255,255,255,0.12);
+                    }
+                </style>
+            </head>
 
-                    if (scrollPos >= offset && scrollPos < offset + height) {
-                        this.navLinks.forEach(link => {
-                            link.classList.remove('text-gold', 'scale-110');
-                            link.classList.add('text-gold/50');
-                            
-                            if (link.getAttribute('href') === `#${id}`) {
-                                link.classList.add('text-gold', 'scale-110');
-                                link.classList.remove('text-gold/50');
+            <body class="flex items-center justify-center min-h-screen text-white px-6">
+
+                <div class="glass max-w-md w-full rounded-3xl p-8 text-center shadow-2xl">
+
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-red-500/20 flex items-center justify-center border border-red-400/30">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-12 h-12 text-red-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                            <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/>
+
+                        </svg>
+
+                    </div>
+
+                    <h1 class="text-3xl font-bold mb-4">
+                        Undangan Tidak Valid
+                    </h1>
+
+                    <p class="text-slate-300 leading-relaxed mb-8">
+                        Link undangan ini belum memiliki nama penerima tamu.
+                        <br><br>
+                        Silakan gunakan link undangan resmi yang diberikan mempelai.
+                    </p>
+
+                    <button onclick="window.location.reload()"
+                            class="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-105 transition duration-300">
+                        Muat Ulang
+                    </button>
+
+                </div>
+            </body>
+    `;
+
+            throw new Error("Guest parameter missing");
+        }else{
+            // DATA SERVICE / INFRASTRUCTURE LAYER
+            const StorageService = {
+                get(key, defaultValue = null) {
+                    const data = localStorage.getItem(key);
+                    return data ? JSON.parse(data) : defaultValue;
+                },
+                set(key, value) {
+                    localStorage.setItem(key, JSON.stringify(value));
+                }
+            };
+
+            // DOMAIN / BUSINESS LOGIC SERVICES
+            class NavigationService {
+                constructor() {
+                    this.navLinks = document.querySelectorAll('.nav-link');
+                    this.sections = document.querySelectorAll('section[id]');
+                }
+
+                init() {
+                    window.addEventListener('scroll', () => this.spyScroll());
+                    
+                    // Tambahkan behavior smooth scrolling saat link diklik
+                    this.navLinks.forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const targetId = link.getAttribute('href');
+                            const targetSection = document.querySelector(targetId);
+                            if (targetSection) {
+                                targetSection.scrollIntoView({ behavior: 'smooth' });
                             }
                         });
-                    }
-                });
-            }
-        }
+                    });
+                }
 
-        class CountdownService {
-            constructor(targetDateStr) {
-                this.targetTime = new Date(targetDateStr).getTime();
-            }
+                spyScroll() {
+                    let scrollPos = window.scrollY || document.documentElement.scrollTop;
+                    
+                    this.sections.forEach(section => {
+                        const offset = section.offsetTop - 120;
+                        const height = section.offsetHeight;
+                        const id = section.getAttribute('id');
 
-            init() {
-                this.calculate();
-                setInterval(() => this.calculate(), 1000);
-            }
-
-            calculate() {
-                const now = new Date().getTime();
-                const distance = this.targetTime - now;
-
-                if (distance < 0) return;
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                document.getElementById('days').innerText = String(days).padStart(2, '0');
-                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-            }
-        }
-
-        class MusicService {
-            constructor() {
-                this.audio = document.getElementById('audio-player');
-                this.isPlaying = false;
-                this.icon = document.getElementById('music-icon');
-                this.btn = document.getElementById('btn-music');
-            }
-
-            init() {
-                // Tidak perlu inisialisasi API eksternal
-                // Kita gunakan native HTML5 Audio API
-                console.log("Audio Service initialized.");
-            }
-
-            play() {
-                if (this.audio) {
-                    this.audio.play().catch(e => console.error("Autoplay diblokir browser:", e));
-                    this.icon.classList.add('animate-spin-slow');
-                    this.btn.classList.add('gold-pulse');
-                    this.isPlaying = true;
+                        if (scrollPos >= offset && scrollPos < offset + height) {
+                            this.navLinks.forEach(link => {
+                                link.classList.remove('text-gold', 'scale-110');
+                                link.classList.add('text-gold/50');
+                                
+                                if (link.getAttribute('href') === `#${id}`) {
+                                    link.classList.add('text-gold', 'scale-110');
+                                    link.classList.remove('text-gold/50');
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
-            pause() {
-                if (this.audio) {
-                    this.audio.pause();
-                    this.icon.classList.remove('animate-spin-slow');
-                    this.btn.classList.remove('gold-pulse');
+            class CountdownService {
+                constructor(targetDateStr) {
+                    this.targetTime = new Date(targetDateStr).getTime();
+                }
+
+                init() {
+                    this.calculate();
+                    setInterval(() => this.calculate(), 1000);
+                }
+
+                calculate() {
+                    const now = new Date().getTime();
+                    const distance = this.targetTime - now;
+
+                    if (distance < 0) return;
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').innerText = String(days).padStart(2, '0');
+                    document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                    document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                    document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+                }
+            }
+
+            class MusicService {
+                constructor() {
+                    this.audio = document.getElementById('audio-player');
                     this.isPlaying = false;
+                    this.icon = document.getElementById('music-icon');
+                    this.btn = document.getElementById('btn-music');
                 }
-            }
 
-            toggle() {
-                if (this.isPlaying) {
-                    this.pause();
-                } else {
-                    this.play();
+                init() {
+                    // Tidak perlu inisialisasi API eksternal
+                    // Kita gunakan native HTML5 Audio API
+                    console.log("Audio Service initialized.");
                 }
-            }
-        }
 
-        class GiftModalService {
-            constructor() {
-                this.modal = document.getElementById('gift-modal');
-                this.card = document.getElementById('gift-modal-card');
-                this.toast = document.getElementById('copy-success-message');
-            }
-
-            open() {
-                this.modal.classList.remove('hidden');
-                setTimeout(() => {
-                    this.modal.classList.remove('opacity-0');
-                    this.card.classList.remove('scale-95');
-                }, 50);
-            }
-
-            close() {
-                this.modal.classList.add('opacity-0');
-                this.card.classList.add('scale-95');
-                setTimeout(() => {
-                    this.modal.classList.add('hidden');
-                }, 300);
-            }
-
-            copy(elementId) {
-                const text = document.getElementById(elementId).innerText;
-                // Clipboard fallback as specified
-                const tempTextArea = document.createElement('textarea');
-                tempTextArea.value = text;
-                document.body.appendChild(tempTextArea);
-                tempTextArea.select();
-                try {
-                    document.execCommand('copy');
-                    this.toast.classList.remove('opacity-0');
-                    setTimeout(() => this.toast.classList.add('opacity-0'), 2500);
-                } catch (err) {
-                    // Fail gracefully
-                }
-                document.body.removeChild(tempTextArea);
-            }
-        }
-
-        class MapSwitcherService {
-            constructor() {
-                this.locations = {
-                    akad: {
-                        iframeUrl: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d248.18922853903302!2d132.76655259280534!3d-5.56291886447972!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d30111a6f914989%3A0xbe5f693c93589501!2sMasjid%20Al-Amin!5e0!3m2!1sen!2sid!4v1779525641691!5m2!1sen!2sid",
-                        redirectUrl: "https://maps.app.goo.gl/vZykG5xsnrEZ7Jr49"
-                    },
-
-                    resepsi: {
-                        iframeUrl: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d992.7572283803015!2d132.7660232696211!3d-5.562732664861865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNcKwMzMnNDUuOCJTIDEzMsKwNDYnMDAuMCJF!5e0!3m2!1sen!2sid!4v1779526010896!5m2!1sen!2sid",
-                    redirectUrl: "https://maps.app.goo.gl/TGf6pncPoSmQZhfG7"
+                play() {
+                    if (this.audio) {
+                        this.audio.play().catch(e => console.error("Autoplay diblokir browser:", e));
+                        this.icon.classList.add('animate-spin-slow');
+                        this.btn.classList.add('gold-pulse');
+                        this.isPlaying = true;
                     }
-                };
-            }
-
-            switchTo(key, scroll = true) {
-                const data = this.locations[key];
-                if (!data) return;
-
-                // Update Iframe Embed
-                document.getElementById('map-iframe').src = data.iframeUrl;
-                
-                // Update Button Redirect Link
-                document.getElementById('map-redirect-btn').href = data.redirectUrl;
-
-                // Update Active Tab Styles
-                const tabAkad = document.getElementById('map-tab-akad');
-                const tabResepsi = document.getElementById('map-tab-resepsi');
-
-                if (key === 'akad') {
-                    tabAkad.className = "px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer border border-gold/30 bg-maroon-900 text-gold shadow-md";
-                    tabResepsi.className = "px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer border border-gold/30 bg-white text-maroon-900 shadow-sm hover:bg-maroon-50";
-                } else {
-                    tabResepsi.className = "px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer border border-gold/30 bg-maroon-900 text-gold shadow-md";
-                    tabAkad.className = "px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer border border-gold/30 bg-white text-maroon-900 shadow-sm hover:bg-maroon-50";
                 }
 
-                // Smooth Scroll to Maps Section
-                if (scroll) {
-                    const target = document.getElementById('maps-section');
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
+                pause() {
+                    if (this.audio) {
+                        this.audio.pause();
+                        this.icon.classList.remove('animate-spin-slow');
+                        this.btn.classList.remove('gold-pulse');
+                        this.isPlaying = false;
+                    }
+                }
+
+                toggle() {
+                    if (this.isPlaying) {
+                        this.pause();
+                    } else {
+                        this.play();
                     }
                 }
             }
-        }
 
-        class GuestbookService {
-            constructor() {
-                this.STORAGE_KEY = 'wedding_wishes';
-                this.defaultWishes = [
-                    { name: "Siti Rahma Renngur", status: "Hadir", comment: "Semoga Allah memberkahi persatuan cinta Kak Fahri dan Kak Balqis menuju keluarga yang sakinah, mawaddah, warahmah.", time: "1 jam yang lalu" },
-                    { name: "Ahmad Junaidi", status: "Hadir", comment: "Selamat menempuh hidup baru sahabat dunia akhiratku! Barakallahu lakum.", time: "3 jam yang lalu" },
-                    { name: "Fatimah Al-Khatiri", status: "Berhalangan", comment: "Barakallahu lakuma wa baraka 'alaikuma wa jama'a bainakuma fii khair. Turut berbahagia dari jauh!", time: "1 hari yang lalu" }
-                ];
-            }
-
-            init() {
-                // Setup Form listener
-                document.getElementById('rsvp-form').addEventListener('submit', (e) => this.handleRSVP(e));
-                this.render();
-            }
-
-            render() {
-                const container = document.getElementById('wishes-box');
-                const wishes = StorageService.get(this.STORAGE_KEY, this.defaultWishes);
-
-                container.innerHTML = wishes.map(wish => `
-                    <div class="bg-maroon-50 border border-gold/10 p-4 rounded-2xl shadow-sm text-sm">
-                        <div class="flex items-center justify-between mb-2">
-                            <h4 class="font-bold text-maroon-900">${wish.name}</h4>
-                            <span class="text-[10px] px-2.5 py-0.5 rounded-full ${
-                                wish.status === 'Hadir' 
-                                ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' 
-                                : wish.status === 'Tidak Hadir' 
-                                ? 'bg-rose-50 text-rose-600 border border-rose-100' 
-                                : 'bg-amber-50 text-amber-600 border border-amber-100'
-                            }">${wish.status}</span>
-                        </div>
-                        <p class="text-gray-600 leading-relaxed font-light mt-1">${wish.comment}</p>
-                        <span class="text-[9px] text-gray-400 block mt-2 text-right">${wish.time}</span>
-                    </div>
-                `).join('');
-            }
-
-            addComment() {
-                const nameInput = document.getElementById('gb-name');
-                const statusInput = document.getElementById('gb-status');
-                const commentInput = document.getElementById('gb-comment');
-
-                if (!nameInput.value.trim() || !commentInput.value.trim()) {
-                    return; // Prevent empty submits
+            class GiftModalService {
+                constructor() {
+                    this.modal = document.getElementById('gift-modal');
+                    this.card = document.getElementById('gift-modal-card');
+                    this.toast = document.getElementById('copy-success-message');
                 }
 
-                const newWish = {
-                    name: nameInput.value,
-                    status: statusInput.value,
-                    comment: commentInput.value,
-                    time: "Baru saja"
-                };
+                open() {
+                    this.modal.classList.remove('hidden');
+                    setTimeout(() => {
+                        this.modal.classList.remove('opacity-0');
+                        this.card.classList.remove('scale-95');
+                    }, 50);
+                }
 
-                const currentWishes = StorageService.get(this.STORAGE_KEY, this.defaultWishes);
-                currentWishes.unshift(newWish);
-                StorageService.set(this.STORAGE_KEY, currentWishes);
+                close() {
+                    this.modal.classList.add('opacity-0');
+                    this.card.classList.add('scale-95');
+                    setTimeout(() => {
+                        this.modal.classList.add('hidden');
+                    }, 300);
+                }
 
-                // Clear input
-                nameInput.value = '';
-                commentInput.value = '';
-
-                this.render();
+                copy(elementId) {
+                    const text = document.getElementById(elementId).innerText;
+                    // Clipboard fallback as specified
+                    const tempTextArea = document.createElement('textarea');
+                    tempTextArea.value = text;
+                    document.body.appendChild(tempTextArea);
+                    tempTextArea.select();
+                    try {
+                        document.execCommand('copy');
+                        this.toast.classList.remove('opacity-0');
+                        setTimeout(() => this.toast.classList.add('opacity-0'), 2500);
+                    } catch (err) {
+                        // Fail gracefully
+                    }
+                    document.body.removeChild(tempTextArea);
+                }
             }
 
-            handleRSVP(e) {
-                e.preventDefault();
-                const name = document.getElementById('rsvp-name').value;
-                const guests = document.getElementById('rsvp-guests').value;
-                const status = document.querySelector('input[name="attendance"]:checked').value;
-                const message = document.getElementById('rsvp-message').value;
+            class MapSwitcherService {
+                constructor() {
+                    this.locations = {
+                        akad: {
+                            iframeUrl: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d248.18922853903302!2d132.76655259280534!3d-5.56291886447972!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d30111a6f914989%3A0xbe5f693c93589501!2sMasjid%20Al-Amin!5e0!3m2!1sen!2sid!4v1779525641691!5m2!1sen!2sid",
+                            redirectUrl: "https://maps.app.goo.gl/vZykG5xsnrEZ7Jr49"
+                        },
 
-                // Push message direct to wishes if not empty
-                if (message.trim() !== '') {
-                    const newWish = {
-                        name: name,
-                        status: status,
-                        comment: `${message} (${guests} Orang)`,
-                        time: "Baru saja"
+                        resepsi: {
+                            iframeUrl: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d992.7572283803015!2d132.7660232696211!3d-5.562732664861865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNcKwMzMnNDUuOCJTIDEzMsKwNDYnMDAuMCJF!5e0!3m2!1sen!2sid!4v1779526010896!5m2!1sen!2sid",
+                        redirectUrl: "https://maps.app.goo.gl/TGf6pncPoSmQZhfG7"
+                        }
                     };
-                    const currentWishes = StorageService.get(this.STORAGE_KEY, this.defaultWishes);
-                    currentWishes.unshift(newWish);
-                    StorageService.set(this.STORAGE_KEY, currentWishes);
+                }
+
+                switchTo(key, scroll = true) {
+                    const data = this.locations[key];
+                    if (!data) return;
+
+                    // Update Iframe Embed
+                    document.getElementById('map-iframe').src = data.iframeUrl;
+                    
+                    // Update Button Redirect Link
+                    document.getElementById('map-redirect-btn').href = data.redirectUrl;
+
+                    // Update Active Tab Styles
+                    const tabAkad = document.getElementById('map-tab-akad');
+                    const tabResepsi = document.getElementById('map-tab-resepsi');
+
+                    if (key === 'akad') {
+                        tabAkad.className = "px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer border border-gold/30 bg-maroon-900 text-gold shadow-md";
+                        tabResepsi.className = "px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer border border-gold/30 bg-white text-maroon-900 shadow-sm hover:bg-maroon-50";
+                    } else {
+                        tabResepsi.className = "px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer border border-gold/30 bg-maroon-900 text-gold shadow-md";
+                        tabAkad.className = "px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer border border-gold/30 bg-white text-maroon-900 shadow-sm hover:bg-maroon-50";
+                    }
+
+                    // Smooth Scroll to Maps Section
+                    if (scroll) {
+                        const target = document.getElementById('maps-section');
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                }
+            }
+
+            class GuestbookService {
+                constructor() {
+                    this.STORAGE_KEY = 'wedding_wishes';
+                }
+
+                init() {
+                    // Setup Form listener
+                    document.getElementById('rsvp-form').addEventListener('submit', (e) => this.handleRSVP(e));
                     this.render();
                 }
 
-                // Show custom modal overlay
-                document.getElementById('rsvp-success-toast').classList.remove('hidden');
-                document.getElementById('rsvp-form').reset();
-            }
-        }
+                render() {
+                    const container = document.getElementById('wishes-box');
+                    const wishes = StorageService.get(this.STORAGE_KEY, this.defaultWishes);
 
-        // APPLICATION MAIN ORCHESTRATOR
-        const App = {
-            countdownService: new CountdownService("Jun 13, 2026 09:00:00"),
-            musicService: new MusicService("https://www.youtube.com/watch?v=EF9CDghLLvo&t=15s"),
-            giftModalService: new GiftModalService(),
-            guestbookService: new GuestbookService(),
-            navigationService: new NavigationService(),
-            mapSwitcherService: new MapSwitcherService(),
-
-            init() {
-                // Parse URL to personalize the guest name dynamically
-                const params = new URLSearchParams(window.location.search);
-                const toName = params.get('to');
-                if (toName) {
-                    document.getElementById('invitation-target').innerText = decodeURIComponent(toName);
-                    // Pre-fill name on forms for seamless UX
-                    document.getElementById('rsvp-name').value = decodeURIComponent(toName);
-                    document.getElementById('gb-name').value = decodeURIComponent(toName);
+                    container.innerHTML = wishes.map(wish => `
+                        <div class="bg-maroon-50 border border-gold/10 p-4 rounded-2xl shadow-sm text-sm">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-bold text-maroon-900">${wish.name}</h4>
+                                <span class="text-[10px] px-2.5 py-0.5 rounded-full ${
+                                    wish.status === 'Hadir' 
+                                    ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' 
+                                    : wish.status === 'Tidak Hadir' 
+                                    ? 'bg-rose-50 text-rose-600 border border-rose-100' 
+                                    : 'bg-amber-50 text-amber-600 border border-amber-100'
+                                }">${wish.status}</span>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed font-light mt-1">${wish.comment}</p>
+                            <span class="text-[9px] text-gray-400 block mt-2 text-right">${wish.time}</span>
+                        </div>
+                    `).join('');
                 }
 
-                // Initialize Animation Library
-                AOS.init({
-                    duration: 1200,
-                    once: true,
-                    easing: 'ease-out'
-                });
+                addComment() {
+                    const nameInput = document.getElementById('gb-name');
+                    const statusInput = document.getElementById('gb-status');
+                    const commentInput = document.getElementById('gb-comment');
 
-                // Run Services
-                this.countdownService.init();
-                this.musicService.init();
-                this.guestbookService.init();
-                this.navigationService.init();
-            },
+                    if (!nameInput.value.trim() || !commentInput.value.trim()) {
+                        return; // Prevent empty submits
+                    }
 
-           
+                    const newWish = {
+                        name: nameInput.value,
+                        status: statusInput.value,
+                        comment: commentInput.value,
+                        time: "Baru saja"
+                    };
 
-            openInvitation() {
-                // Fade-out Splash Cover
-                const cover = document.getElementById('splash-cover');
-                cover.classList.add('opacity-0', 'scale-105');
-                
-                setTimeout(() => {
-                    cover.style.display = 'none';
-                    // Show Main Web Structure smoothly
-                    const main = document.getElementById('main-content');
-                    main.classList.remove('hidden');
-                    setTimeout(() => main.classList.remove('opacity-0'), 50);
-                    
-                    // Run Audio Stream Automatically on User Interaction
-                    App.musicService.play();
-        
-                }, 1000);
+                    const currentWishes = StorageService.get(this.STORAGE_KEY, this.defaultWishes);
+                    currentWishes.unshift(newWish);
+                    StorageService.set(this.STORAGE_KEY, currentWishes);
 
+                    // Clear input
+                    nameInput.value = '';
+                    commentInput.value = '';
+
+                    this.render();
+                }
+
+                handleRSVP(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('rsvp-name').value;
+                    const guests = document.getElementById('rsvp-guests').value;
+                    const status = document.querySelector('input[name="attendance"]:checked').value;
+                    const message = document.getElementById('rsvp-message').value;
+
+                    // Push message direct to wishes if not empty
+                    if (message.trim() !== '') {
+                        const newWish = {
+                            name: name,
+                            status: status,
+                            comment: `${message} (${guests} Orang)`,
+                            time: "Baru saja"
+                        };
+                        const currentWishes = StorageService.get(this.STORAGE_KEY, this.defaultWishes);
+                        currentWishes.unshift(newWish);
+                        StorageService.set(this.STORAGE_KEY, currentWishes);
+                        this.render();
+                    }
+
+                    // Show custom modal overlay
+                    document.getElementById('rsvp-success-toast').classList.remove('hidden');
+                    document.getElementById('rsvp-form').reset();
+                }
             }
-        };
 
-        // Window Bootstrap
-        window.addEventListener('DOMContentLoaded', () => {
-            App.init();
-        });
+            // APPLICATION MAIN ORCHESTRATOR
+            const App = {
+                countdownService: new CountdownService("Jun 13, 2026 09:00:00"),
+                musicService: new MusicService("https://www.youtube.com/watch?v=EF9CDghLLvo&t=15s"),
+                giftModalService: new GiftModalService(),
+                guestbookService: new GuestbookService(),
+                navigationService: new NavigationService(),
+                mapSwitcherService: new MapSwitcherService(),
+
+                init() {
+                    // Parse URL to personalize the guest name dynamically
+                    const params = new URLSearchParams(window.location.search);
+                    const toName = params.get('to');
+                    if (toName) {
+                        document.getElementById('invitation-target').innerText = decodeURIComponent(toName);
+                        // Pre-fill name on forms for seamless UX
+                        document.getElementById('rsvp-name').value = decodeURIComponent(toName);
+                        document.getElementById('gb-name').value = decodeURIComponent(toName);
+                    }
+
+                    // Initialize Animation Library
+                    AOS.init({
+                        duration: 1200,
+                        once: true,
+                        easing: 'ease-out'
+                    });
+
+                    // Run Services
+                    this.countdownService.init();
+                    this.musicService.init();
+                    this.guestbookService.init();
+                    this.navigationService.init();
+                },
+
+            
+
+                openInvitation() {
+                    // Fade-out Splash Cover
+                    const cover = document.getElementById('splash-cover');
+                    cover.classList.add('opacity-0', 'scale-105');
+                    
+                    setTimeout(() => {
+                        cover.style.display = 'none';
+                        // Show Main Web Structure smoothly
+                        const main = document.getElementById('main-content');
+                        main.classList.remove('hidden');
+                        setTimeout(() => main.classList.remove('opacity-0'), 50);
+                        
+                        // Run Audio Stream Automatically on User Interaction
+                        App.musicService.play();
+            
+                    }, 1000);
+
+                }
+            };
+
+            // Window Bootstrap
+            window.addEventListener('DOMContentLoaded', () => {
+                App.init();
+            });
+        }
     </script>
 </body>
 </html>
